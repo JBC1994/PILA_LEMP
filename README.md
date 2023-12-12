@@ -82,8 +82,9 @@ borramos el archivo descargado y nos quedamos con nuestra carpeta que es la que 
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/21ec6133-5540-43f5-9ebc-710e8b88dbb8)
 
-Ahora nos vamos al fichero 
+Ahora nos vamos al fichero de la ruta /etc/
 
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/21ec6133-5540-43f5-9ebc-710e8b88dbb8)
 
 VAGRANT STATUS
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/302d2c06-7138-4a0b-9807-8010a7b7f344)
