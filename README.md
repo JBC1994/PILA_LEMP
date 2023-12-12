@@ -141,9 +141,14 @@ Como vemos tenemos nuestra carpeta montada.
 ---------------------
 ahora en nuestro NFS.
 editamos nuestro servidor NFS.
+una vez editemos descarguemos el worpress y borremos la carpeta y la volvamos a crear tendremos que ejecutar este comando. 
+sudo exportfs -ra
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/9292aa60-7278-4c0d-935f-37bc289a26a6)
 
+ahora lo recomendable despues de instalar wordpress seria cambiar de nombre de nuestro fichero de configuracion para que sea mas identificativo para nosotros
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/bf87d97a-8bb9-4e21-b62b-e18c595bcf66)
 
 sudo mkdir -p /var/nfs/wordpress 
 
@@ -153,7 +158,7 @@ sudo service nfs-kernel-server restart
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/d209f56a-98d7-482b-9580-df8637173cb5)
 
-En mi caso he modificado el fichero dentro de wordpress llamado, sudo cp wp-config-sample.php wp-config.php
+En mi caso he modificado el fichero dentro de wordpress llamado, sudo mv wp-config-sample.php wp-config.php
 
 sudo chmod -R 755 wordpress/
 sudo chown nobody:nogroup /var/nfs/wordpress/
@@ -186,11 +191,31 @@ AHORA NUESTRO BALANCEADOR.
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/2778c8ea-d770-4325-a08d-d6a946f2019d)
 
 AHORA NUESTRO NGINX1
+
+
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/75d6a442-ce5b-494a-9ef9-cdabe0ffd6fb)
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/02e50eda-1f5b-4e3b-82ff-22146464ac74)
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/c394da09-b8c1-4ad8-a751-42962c089ace)
 
+Tenemos que crear nuestro directorio para despues montarlo. 
+sudo mount 192.168.3.12:/var/nfs/wordpress /var/nfs/wordpress
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/6a290956-5061-4d97-9c14-7d4f60303bff)
+
+ahora habilitaremos las siguientes normas en nuestros servidores backend. 
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/4c01bd99-b418-49bc-a6b9-afb28e72ed40)
+
+
+
 BBDD MARIADB
+
+ahora creamos la base de datos . 
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/98b1d633-b931-430b-b80b-fea733564c0d)
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/404c2ddb-2d4f-4b30-81aa-78447e457187)
+
+
 
