@@ -23,6 +23,72 @@
 -    4.1. [Configuración instancia server MariaDB AWS](#Configuración-instancia-server-MariaDB-AWS)
 -    4.2. [Prueba definitiva Balanceador en AWS](#Prueba-definitiva-Balanceador-en-AWS)
 
+
+
+En nuestro balanceador borraremos las zonas sites-enabled y configuraremos un nuevo fichero con un enlace simbolico ubicado en sites-available que ira a al directorio /etc/nginx/sites-enabled 
+Borramos este enlace y habilitamos el nuestro. 
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/004888dc-33b3-4551-8199-c735c855dbde)
+
+ahora copiamos el fichero default y le cambiamos el nombre por "Balanceador" asi nos será mucho mas identificativo.
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/59022ec8-6b1f-4a80-9dff-103b6b17819e)
+
+ahora nos iremos a la ruta /etc/nginx/sites-enabled, veremos el fichero "Balanceador", pero esa configuración que viene por defecto en el fichero no nos servirá por lo que tendremos que escribir esta otra. 
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/b7f117fe-643e-4aa2-ba90-4496ecbb0845)
+
+    upstream backend_servidores {
+    server 192.168.3.10; # nginx1
+    server 192.168.3.11; # nginx2
+    }
+    
+    server {
+    listen 80;
+    server_name nginxm_balanceador_backend;
+
+    location / {
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_pass http://backend_servidores;
+      }
+    }
+
+Servidor NFS
+
+creamos la ruta mkdir -p /var/nfs/wordpress
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/71883044-c8cf-41da-a94c-53bb9cb39cc2)
+
+Una vez creada la ruta nos vamos a nuestro fichero sudo nano /etc/export
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/6cb0d735-a7ea-439a-8f00-33e18ed6d34c)
+
+
+    /var/nfs/wordpress 192.168.3.10(rw,sync,no_subtree_check) 192.168.3.11(rw,sync,no_subtree_check)
+
+Recordemos descargar worpress en nuestra ruta, /var/nfs
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/8d2163d5-a4a2-4481-9407-395d023a4089)
+
+Despues de tenerlo descargado hacemos lo siguiente, recordemos que tenemos una carpeta llamada "wordpress" pues la eliminamos y descomprimimos el .tar que tenemos descargado. 
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/bc37b292-1db5-44cd-b18e-9860cb6101b8)
+
+El archivo descomprimido nos dara la carpeta perteneciente a wordpress. 
+borramos el archivo descargado y nos quedamos con nuestra carpeta que es la que nos interesa. 
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/21ec6133-5540-43f5-9ebc-710e8b88dbb8)
+
+Ahora nos vamos al fichero 
+
+
+VAGRANT STATUS
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/302d2c06-7138-4a0b-9807-8010a7b7f344)
+
+
 ## INTRODUCCIÓN PILA LEMP
 Balanceador, prueba ping. 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/4f846076-3689-46a9-91fb-d3c5b8fc3fbb)
@@ -74,6 +140,7 @@ Como vemos tenemos nuestra carpeta montada.
 ---------------------
 ahora en nuestro NFS.
 editamos nuestro servidor NFS.
+
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/9292aa60-7278-4c0d-935f-37bc289a26a6)
 
 
