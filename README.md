@@ -217,5 +217,7 @@ ahora creamos la base de datos .
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/404c2ddb-2d4f-4b30-81aa-78447e457187)
 
+edito los privilegios porque me confundi 
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/c104548a-e9ba-4e2a-ba14-ce81dfa9237b)
 
 
