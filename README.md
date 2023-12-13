@@ -9,10 +9,7 @@
 -    1.5. [MONTAJE DE CARPETA NFS A BACKEND](MONTAJE-DE-CARPETAS-NFS-A-BACKEND)
 -    1.5. [CONFIGURACIÓN SERVIDOR MARIADB](#CONFIGURACIÓN-SERVIDOR-MARIADB)
 
-2.0. [¿QUE ES UN UFW EN LINUX?](#QUE-ES-UN-UFW-EN-LINUX) 
--    2.1. [CONFIGURAR UFW EN TODAS LAS MAQUINAS](#CONFIGURAR-UFW-EN-TODAS-LAS-MAQUINAS)
--    2.2. [CONFIGURAR SERVICIO PHP FPM](#CONFIGURAR-SERVICIO-PHP-FPM)
--    2.3. [PUESTA-EN MARCHA-PILA-LEMP](#PUESTA-EN-MARCHA-PILA-LEMP)
+2.0. [PUESTA-EN MARCHA-PILA-LEMP](#PUESTA-EN-MARCHA-PILA-LEMP)
 
 3.0. [Instalación de servicios en instancias AWS](#Instalación-de-servicios-en-instancias-AWS)
 -    3.1. [Configuración de conectividad en instancias AWS](#Configuración-de-conectividad-en-instancias-AWS)
@@ -159,7 +156,7 @@ Editamos el fichero y añadimos lo siguiente, en mi caso:
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/d8af1996-b812-45f3-af66-2244cdaa884b)
 
 
-Pongo estos datos porque en mi servidor mariadb no existe informacion ninguna y sera con la BBDD que trabajaré.
+Pongo estos datos porque son con los que trabajaré el resto de práctica, veremos mas adelante como configuramos nuestro usuario y creamos la BBDD en la maquina MariaDB server.
 
 Bien, una vez tengamos este paso, nos tendremos que ir a la siguiente ruta.
 
@@ -171,7 +168,7 @@ Este sitio será donde nuestro servidor NFS montará nuestra carpeta en los serv
     
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/064d2d93-54b5-4bbb-83d9-fe1e311fc318)
 
-Bien, una vez hecho este paso, tendremos que irnos al siguiente directorio y editar su fichero de configuración.
+Hecho este paso, tendremos que irnos al siguiente directorio y editar su fichero de configuración.
 
     /etc/php/7.3/fpm/pool.d/www.conf
 
@@ -196,12 +193,6 @@ Ahora si hacemos un ls -l de nuestro directorio /var/nfs/wordpress, nos encontra
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/4c1b9189-5d64-4d81-825f-a7f02a730c28)
 
 ## CONFIGURACIÓN SERVIDOR MARIADB
-
-## QUE ES UN UFW EN LINUX
-
-## CONFIGURAR UFW EN TODAS LAS MAQUINAS
-
-## CONFIGURAR SERVICIO PHP FPM
 
 ## PUESTA-EN MARCHA-PILA-LEMP
 
