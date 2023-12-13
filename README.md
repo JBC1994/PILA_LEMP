@@ -30,7 +30,7 @@ La pila LEMP es una alternativa a la pila LAMP, donde Apache es el servidor web 
 
 ## ESCENARIO DE LA PRÁCTICA
 
-![LEMP2](https://github.com/JBC1994/PILA_LEMP/assets/120668110/c33ebff5-fccb-4422-9e8a-11e3743486a1)
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/6ca8a204-d396-4f27-8898-e2d8e7061709)
 
 
 Nos encontraremos con lo siguiente:
