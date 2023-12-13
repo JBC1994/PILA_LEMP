@@ -6,6 +6,7 @@
 -    1.2. [CONFIGURACIÓN BALANCEADOR](#CONFIGURACIÓN-BALANCEADOR)
 -    1.3. [CONFIGURACIÓN BACKEND NGINX](#CONFIGURACIÓN-BACKEND-NGINX)
 -    1.4. [CONFIGURACIÓN SERVIDOR NFS](#CONFIGURACIÓN-SERVIDOR-NFS)
+-    1.5. [MONTAJE DE CARPETA NFS A BACKEND](MONTAJE-DE-CARPETAS-NFS-A-BACKEND)
 -    1.5. [CONFIGURACIÓN SERVIDOR MARIADB](#CONFIGURACIÓN-SERVIDOR-MARIADB)
 
 2.0. [¿QUE ES UN UFW EN LINUX?](#QUE-ES-UN-UFW-EN-LINUX) 
@@ -95,7 +96,101 @@ Bueno, pues hasta aquí podemos decir que hemos terminado la configuración de n
 
 ## CONFIGURACIÓN BACKEND NGINX
 
+Como hemos comentado en el apartado anterior, teniendo en cuenta que nuestros script de aprovisionamiento se instalarón correctamente. 
+Esta máquina contendrá los siguientes servicios instalados.
+
+    servidor nginx
+    servidor mariadb-client
+    install nfs-common
+    --------------------------
+    --------------------------
+    COMANDOS QUE UTILIZAREMOS.
+    sudo systemctl restart nginx
+    sudo systemctl restart mariadb.service
+    sudo systemctl restart php7.4-fpm
+    sudo ufw reload
+    sudo mount
+
+Para configurar nuestro servidor de backend Nginx, haremos lo siguiente, nos iremos a la siguiente ruta: **/etc/nginx/sites-available**.
+Una vez aquí haremos lo siguiente, editaremos el fichero **"default"** y tan solo moficiaremos estas líneas.
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/d86d9d7c-79ab-4953-bcca-8fad7a43458c)
+
+
+Os dareís cuenta que como ruta he puesto **"root /var/nfs/wordpress"** Esto esto es así porque ahí será donde nuestro servidor nginx backend hará la petición al sitio web, que a su vez sera una carpeta montada en nuestro servidor **"UFS"** .
+
+Hago bastante hincapié en que tengáis cuidado con esta linea, tendreis que añadir manualmente la palabra **index.php**.
+
+    # Add index.php to the list if you are using PHP
+        index index.html index.php index.htm index.nginx-debian.html;
+
+También tendremos que tener en cuenta que esa ip que ponemos ahi hace referencia al servidor NFS desde el cual se hara la petición.
+
+Bien, una vez hecho todo esto, el siguiente paso será hacer exactamente lo mismo pero en nuestro otro servidor backend.
+Una vez hecho este paso, reiniciamos el sercicio.
+
+    sudo systemctl restart nginx
+
 ## CONFIGURACIÓN SERVIDOR NFS
+
+En este apartado teniendo en cuenta que nuestros script de aprovisionamiento han hecho bien su trabajo, haremos lo siguiente.
+
+Nos iremos a nuestra ruta **/var/nfs/**, Descargaremos ahi nuestro CMS, en este caso con sudo wget.
+
+    wget https://wordpress.org/latest.tar.gz
+    
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/2bcb0729-fbf5-4f7d-9098-a1c24d74af5d)
+
+Una vez realizada la descarga tendremos que descomprimir el archivo de la siguiente manera.
+
+    tar -xzvf latest.tar.gz
+
+Nos debería de quedar algo así.
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/6826fad8-3597-48c5-bef8-3584c24ad38a)
+
+Ahora nos meteremos dentro de la carpeta de wordpress y buscaremos el fichero **wp-config-example.php.**
+Lo recomendable seria darle un nombre mas orientativo, en este caso me decanté por, mv wp-config-example.php wp-config-php.
+Editamos el fichero y añadimos lo siguiente, en mi caso:
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/d8af1996-b812-45f3-af66-2244cdaa884b)
+
+
+Pongo estos datos porque en mi servidor mariadb no existe informacion ninguna y sera con la BBDD que trabajaré.
+
+Bien, una vez tengamos este paso, nos tendremos que ir a la siguiente ruta.
+
+    sudo nano /etc/exports
+
+Este sitio será donde nuestro servidor NFS montará nuestra carpeta en los servidores de backend, deberemos de indicarles las IP según corresponda. 
+
+    /var/nfs/wordpress 192.168.3.10(rw,sync,no_subtree_check) 192.168.3.11(rw,sync,no_subtree_check)
+    
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/064d2d93-54b5-4bbb-83d9-fe1e311fc318)
+
+Bien, una vez hecho este paso, tendremos que irnos al siguiente directorio y editar su fichero de configuración.
+
+    /etc/php/7.3/fpm/pool.d/www.conf
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/9965b65c-1595-494d-8b87-bb5b2046c52e)
+
+Deberemos de poner la IP de nuestro servidor NFS.
+Una vez terminado ejecutaremos el siguiente comando para actualizar los volumenes montados en caso de que surgiese algun problema.
+    
+    sudo exportfs -ra
+
+## MONTAJE DE CARPETA NFS A BACKEND
+
+Bien, teniendo en cuenta que nuestro servidor NFS ahora mismo ya tiene montado el volumen haremos lo siguiente. Nos iremos a nuestros servidores de backend y haremos lo siguiente.
+
+    sudo mount 192.168.3.12:/var/nfs/wordpress /var/nfs/wordpress
+
+    Lo que estamos haciendo aquí es que estamos montado el directorio de nuestro servidor backend que habiamos en el paso anterior en la carpeta que nuestro script de aprovisionamiento 
+    creo cuando se incio la maquina, que esta en /var/nfs/wordpress .
+
+Ahora si hacemos un ls -l de nuestro directorio /var/nfs/wordpress, nos encontraremos con la carpeta del servidor NFS montada. 
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/4c1b9189-5d64-4d81-825f-a7f02a730c28)
 
 ## CONFIGURACIÓN SERVIDOR MARIADB
 
@@ -271,10 +366,10 @@ TENEMOS QUE TENER EN CUENTA QUE VAGRANT TRATA LA HORA COMO UNA MENOS DESPUES DE 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/7baac47a-8fd7-44d1-b50a-b5f2c8037591)
 
 AHORA NUESTRO BALANCEADOR. 
+
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/2778c8ea-d770-4325-a08d-d6a946f2019d)
 
 AHORA NUESTRO NGINX1
-
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/75d6a442-ce5b-494a-9ef9-cdabe0ffd6fb)
 
@@ -289,6 +384,7 @@ sudo mount 192.168.3.12:/var/nfs/wordpress /var/nfs/wordpress
 
 ahora habilitaremos las siguientes normas en nuestros servidores backend. 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/4c01bd99-b418-49bc-a6b9-afb28e72ed40)
+
 
 
 
