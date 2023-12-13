@@ -30,6 +30,21 @@ La pila LEMP es una alternativa a la pila LAMP, donde Apache es el servidor web 
 
 ## ESCENARIO DE LA PRÁCTICA
 
+![LEMP2](https://github.com/JBC1994/PILA_LEMP/assets/120668110/c33ebff5-fccb-4422-9e8a-11e3743486a1)
+
+
+Nos encontraremos con lo siguiente:
+
+        Maquina balanceador con IP: 192.168.3.5
+        Maquina NGINX1 con IP: 192.168.3.10 - 172.16.1.10
+        Maquina NGINX2 con IP: 192.168.3.11 - 172.16.1.11
+        Maquina NFS con IP: 192.168.3.12 - 172.16.1.12
+        Maquina MARIADB con IP: 172.16.1.5
+
+Nuestro servidor Balancedor si podrá tener acceso a internet y si podrá conectarse a nuestras maquinas backend, pero NO a nuestro servidor mariadb.
+Nuestros host backend, si podrán tener conexión con el servidor mariadb, servidor nfs y balanceador, pero NO pueden tener internet.
+Nuestro servidor NFS estará configurado de igual forma que nuestros backend.
+Nuestro servidor MariaDB si podrán conectarse a los servidores backend, pero NO tendrá acceso a internet ni tampoco al servidor balanceador.
 
 ## CONFIGURACIÓN BALANCEADOR
 
