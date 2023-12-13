@@ -41,6 +41,31 @@ La pila LEMP es una alternativa a la pila LAMP, donde Apache es el servidor web 
 
 ## CONFIGURACIÓN BALANCEADOR
 
+En este apartado empezaremos configurando nuestro balanceador. Parto de la base que despues de ejecutar nuestro maravilloso script de aprovisionamiento tenemos instalado el servidor NGINX el cual nos permitirá que está máquina se convierta en un balanceador. 
+
+Para ello haremos lo siguiente, nos iremos a nuestro directorio **/etc/nginx/sites-available/default** , una vez ahí haremos un cp del fichero original llamado "default" y le cambiaremos el nombre por uno mas identificativo, en este caso "Balanceador".
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/feeab358-0fae-4977-a85e-c53dda0f324b)
+
+Bien, una vez hecho esto tendremos que entender que nuestro servidor **nginx** solo recogerá los ficheros en sitios habilitados a traves de un enlace, a diferencia de nuestro conocido **"apache2"** que se hacía con **a2enable**.
+
+Lo primero que crearemos será un enlace del fichero **"Balanceador"** y que este apunte a la ruta **/etc/nginx/sitex-available /etc/nginx/sites-enabled**
+Para ello ejecutaremos el siguiente comando. 
+
+    COMANDO: sudo ln -s /etc/nginx/sites-available/Balanceador /etc/nginx/sites-enabled/ 
+    Lo que estamos haciendo es crear un enlace simbólico que apunte desde nuestro directorio "Sites-available" a "sites-enabled".
+
+Bien, una vez hecho este paso, haremos lo siguiente, nos iremos a la ruta de **/etc/nginx/sites-enabled**, ahí veremos fichero habilitado, pero... no servirá con esto, deberemos borrar el enlace anterior, en este caso el fichero **"default"** por defecto. 
+
+    sudo rm -r default
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/798a9df6-53ec-4508-8780-5538b0b75f9c)
+
+Como vemos, despues de haber borrado el anterior, nos quedariamos con este ya activo, de hecho cambia de color, y si hacemos un **ls -l** apreciamos la ruta de donde hace referencia.
+
+¿Hasta aqui bien no?
+
+
 ## CONFIGURACIÓN BACKEND NGINX
 
 ## CONFIGURACIÓN SERVIDOR NFS
