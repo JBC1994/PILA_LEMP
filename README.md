@@ -297,4 +297,4 @@ NGINX BAKEND2
 
 ![image](https://github.com/JBC1994/PRACTICA_PILA_LEMP_JOAQUIN_BLANCO_CONTRERAS/assets/120668110/a16b65a1-84f1-4bda-b1a7-da62f4ada180)
 
-
+VIDEO: https://www.youtube.com/watch?v=dEOnv9bB7z0
