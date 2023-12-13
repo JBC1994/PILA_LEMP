@@ -9,18 +9,11 @@
 -    1.5. [MONTAJE DE CARPETA NFS A BACKEND](MONTAJE-DE-CARPETAS-NFS-A-BACKEND)
 -    1.5. [CONFIGURACIÓN SERVIDOR MARIADB](#CONFIGURACIÓN-SERVIDOR-MARIADB)
 
-2.0. [PUESTA-EN MARCHA-PILA-LEMP](#PUESTA-EN-MARCHA-PILA-LEMP)
+2.0. [CONEXIÓN REMOTA A NUESTRA BBDD DESDE BACKEND NGINX](#CONEXIÓN-REMOTA-A-NUESTRA-BBDD-DESDE-BACKEND-NGINX)
+-    2.1. [PING EN TODAS LAS MAQUINAS]
+-    2.1. [PUESTA-EN MARCHA-PILA-LEMP](#PUESTA-EN-MARCHA-PILA-LEMP)
+-    2.2.
 
-3.0. [Instalación de servicios en instancias AWS](#Instalación-de-servicios-en-instancias-AWS)
--    3.1. [Configuración de conectividad en instancias AWS](#Configuración-de-conectividad-en-instancias-AWS)
--    3.2. [Creación de dominio en NO-ip](#Creación-de-dominio-en-NO-ip)
--    3.3. [HTTPS con Let’s Encrypt y Certbot en instancia Balanceador AWS](#HTTPS-con-Lets-Encrypt-y-Certbot-en-instancia-Balanceador-AWS)
--    3.4. [Configuración Balanceador AWS](#Configuración-Balanceador-AWS)
--    3.5. [Repositorio GitHub, con SCP en AWS para instancias backend y MariaDB](#Repositorio-GitHub-con-SCP-en-AWS-para-instancias-backend-y-MariaDB)
-
-4.0. [Puesta en marcha de nuestro Balanceador AWS](#Puesta-en-marcha-de-nuestro-Balanceador-AWS) 
--    4.1. [Configuración instancia server MariaDB AWS](#Configuración-instancia-server-MariaDB-AWS)
--    4.2. [Prueba definitiva Balanceador en AWS](#Prueba-definitiva-Balanceador-en-AWS)
 
 
 ## INTRODUCCIÓN PILA LEMP
@@ -132,6 +125,7 @@ Bien, una vez hecho todo esto, el siguiente paso será hacer exactamente lo mism
 Una vez hecho este paso, reiniciamos el sercicio.
 
     sudo systemctl restart nginx
+    sudo systemctl restart php7.3-fpm
 
 ## CONFIGURACIÓN SERVIDOR NFS
 
@@ -183,8 +177,8 @@ Deberemos de poner la IP de nuestro servidor NFS.
 Una vez terminado ejecutaremos el siguiente comando para actualizar los volumenes montados en caso de que surgiese algun problema.
     
     sudo exportfs -ra
-    sudo systemctl restart php7.4-fpm
-    sudo systemctl restart nginx
+    sudo systemctl restart php7.3-fpm
+    sudo systemctl restart nfs-server
 
 
 ## MONTAJE DE CARPETA NFS A BACKEND
@@ -202,7 +196,70 @@ Ahora si hacemos un ls -l de nuestro directorio /var/nfs/wordpress, nos encontra
 
 ## CONFIGURACIÓN SERVIDOR MARIADB
 
-## PUESTA-EN MARCHA-PILA-LEMP
+Nos iremos a nuestro servidor MariaDB, y ahí nos iremos a la siguiente ruta. 
+
+    sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+
+Una vez ahí modificaremos la IP y pondremos que solo escuche solicitudes desde su red. 
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/76d5e6e2-1b8f-4b66-a7bc-c1fd5c5dc924)
+
+Ahora empezaremos a crear la BBDD para nuestro wordpress, para ello nos logueamos como root.
+
+    sudo mysql -u root;
+
+    CREATE DATABASE wordpress_db;
+    CREATE USER 'joaquin'@'172.16.1.%' IDENTIFIED BY 'joaquinpass';
+    GRANT ALL PRIVILEGES ON wordpress_db.* TO 'joaquin'@'172.16.1.%';
+    FLUSH PRIVILEGES;
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/a10b6ffb-e7e7-4018-b548-9a9bac86bbe5)
+
+    Despues de todo esto, reiniciaremos el servicio de mariadb.
+    sudo systemctl restart mariadb
+
+Bien, hasta aquí, ¿todo correcto no? lo recomendable seria ir a nuestro cliente backend nginx y hacer una prueba de conexión remota para certificar que si conecta correctamente con la BBDD.
+
+
+## CONEXIÓN REMOTA A NUESTRA BBDD DESDE BACKEND NGINX
+
+Bien, como hemos comentado en el apartado anterior, antes de probar nada lo correcto sería ver si verdaderamente nuestro servidor nginx puede conectarse remotamente a nuestro servidor de BBDD. Para ello haremos lo siguiente.
+
+    sudo mysql -u joaquin -p -h 172.16.1.5;
+
+    ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/6367f15c-eb0f-463c-a2b2-460afa4a4a10)
+
+
+## PUESTA EN MARCHA PILA LEMP 
+
+En este apartado tendremos que tener en cuenta que si todo lo anterior lo hemos hecho correctamente, está práctica no tendrá inconveniente ninguno en su funcionamiento. 
+
+Para ello lo primero que tendremos que hacer será irnos a nuestro navegador web (recomiendo ejecutar con "pestaña privada" para ahorrarnos problemas).
+
+Introducideremos la siguiente direccion: **http://localhost:9000/wp-admin/install.php**
+
+Si todo ha salido correctamente, debería de salirnos esta ventana, en caso de que no os saliera nada os recomendaría que observarais muy bien el error y os vayais a vuestros ficheros error.log , ya que muchas veces suelen ser problemas de sintaxis o que no hemos reiniciado los servicios correctamente...
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/2fc37959-2a8f-4bb7-85c3-5b3df675cae6)
+
+El resultado ha sido un éxito!! 
+
+Ahora no es más que instalar nuestro wordpress. Para ello lo personalizaremos a nuestra manera y le daremos al boton de la esquina inferior que pone **"install wordpress"**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 En nuestro balanceador borraremos las zonas sites-enabled y configuraremos un nuevo fichero con un enlace simbolico ubicado en sites-available que ira a al directorio /etc/nginx/sites-enabled 
