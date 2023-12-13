@@ -116,7 +116,6 @@ Esta máquina contendrá los siguientes servicios instalados.
     sudo systemctl restart nginx
     sudo systemctl restart mariadb.service
     sudo systemctl restart php7.4-fpm
-    sudo ufw reload
     sudo mount
 
 Para configurar nuestro servidor de backend Nginx, haremos lo siguiente, nos iremos a la siguiente ruta: **/etc/nginx/sites-available**.
