@@ -24,7 +24,7 @@
 -    4.2. [Prueba definitiva Balanceador en AWS](#Prueba-definitiva-Balanceador-en-AWS)
 
 
-# INTRODUCCIÓN PILA LEMP
+## INTRODUCCIÓN PILA LEMP
 
 Una pila "LEMP" es un conjunto de software de código abierto que se instala comúnmente juntos para habilitar un servidor para alojar sitios web y aplicaciones web. La palabra "LEMP" es un acrónimo que representa el primer letra de cada uno de los siguientes componentes:
 
@@ -36,16 +36,16 @@ Este conjunto de software proporciona una base sólida para servir aplicaciones 
 
 La pila LEMP es una alternativa a la pila LAMP, donde Apache es el servidor web en lugar de NGINX.
 
-# ESCENARIO DE LA PRÁCTICA
+## ESCENARIO DE LA PRÁCTICA
 
 
-# CONFIGURACIÓN BALANCEADOR
+## CONFIGURACIÓN BALANCEADOR
 
-# CONFIGURACIÓN BACKEND NGINX
+## CONFIGURACIÓN BACKEND NGINX
 
-# CONFIGURACIÓN SERVIDOR NFS
+## CONFIGURACIÓN SERVIDOR NFS
 
-# CONFIGURACIÓN SERVIDOR MARIADB
+## CONFIGURACIÓN SERVIDOR MARIADB
 
 
 
