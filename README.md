@@ -89,7 +89,10 @@ De tal manera, que su resultado será el siguiente:
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/77e96065-7c21-42fb-a10b-be82cd9a9848)
 
-Bueno, pues hasta aquí podemos decir que hemos terminado la configuración de nuestro Balanceador, quedan mas cosas, pero prefiero contároslo al final.
+Bueno, pues hasta aquí podemos decir que hemos terminado la configuración de nuestro Balanceador. 
+Antes que nada, ejecutaremos el comando:
+
+    sudo systemctl restart nginx
 
 ## CONFIGURACIÓN BACKEND NGINX
 
@@ -113,8 +116,10 @@ Una vez aquí haremos lo siguiente, editaremos el fichero **"default"** y tan so
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/d86d9d7c-79ab-4953-bcca-8fad7a43458c)
 
+Vemos como he puesto la ruta **"root /var/nfs/wordpress"** Esto esto es así porque ahí será donde nuestro servidor nginx backend hará la petición al sitio web, que a su vez se hará una carpeta montada en nuestro servidor **"NFS"** .
+Tambien crearemos nuesta carpeta para que el montaje sea exitoso.
 
-Os dareís cuenta que como ruta he puesto **"root /var/nfs/wordpress"** Esto esto es así porque ahí será donde nuestro servidor nginx backend hará la petición al sitio web, que a su vez sera una carpeta montada en nuestro servidor **"UFS"** .
+    sudo mkdir -p /var/nfs/wordpress
 
 Hago bastante hincapié en que tengáis cuidado con esta linea, tendreis que añadir manualmente la palabra **index.php**.
 
@@ -140,7 +145,7 @@ Nos iremos a nuestra ruta **/var/nfs/**, Descargaremos ahi nuestro CMS, en este 
 
 Una vez realizada la descarga tendremos que descomprimir el archivo de la siguiente manera.
 
-    tar -xzvf latest.tar.gz
+    sudo tar -xzvf latest.tar.gz
 
 Nos debería de quedar algo así.
 
@@ -149,7 +154,7 @@ Nos debería de quedar algo así.
 Ahora nos meteremos dentro de la carpeta de wordpress y buscaremos el fichero **wp-config-example.php.**
 Lo recomendable seria darle un nombre mas orientativo, en este caso me decanté por:
 
-    mv wp-config-example.php wp-config-php.
+    mv wp-config-sample.php wp-config.php
 
 Editamos el fichero y añadimos lo siguiente, en mi caso:
 
@@ -170,7 +175,7 @@ Este sitio será donde nuestro servidor NFS montará nuestra carpeta en los serv
 
 Hecho este paso, tendremos que irnos al siguiente directorio y editar su fichero de configuración.
 
-    /etc/php/7.3/fpm/pool.d/www.conf
+    sudo nano /etc/php/7.3/fpm/pool.d/www.conf
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/9965b65c-1595-494d-8b87-bb5b2046c52e)
 
@@ -178,6 +183,9 @@ Deberemos de poner la IP de nuestro servidor NFS.
 Una vez terminado ejecutaremos el siguiente comando para actualizar los volumenes montados en caso de que surgiese algun problema.
     
     sudo exportfs -ra
+    sudo systemctl restart php7.4-fpm
+    sudo systemctl restart nginx
+
 
 ## MONTAJE DE CARPETA NFS A BACKEND
 
