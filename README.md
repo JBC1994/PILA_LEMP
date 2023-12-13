@@ -18,7 +18,7 @@
 
 ## INTRODUCCIÓN PILA LEMP
 
-Una pila "LEMP" es un conjunto de software de código abierto que se instala comúnmente juntos para habilitar un servidor para alojar sitios web y aplicaciones web. La palabra "LEMP" es un acrónimo que representa el primer letra de cada uno de los siguientes componentes:
+Una pila "LEMP" es un conjunto de software de código abierto que se instala comúnmente juntos para habilitar un servidor para alojar sitios web y aplicaciones web. La palabra "LEMP" es un acrónimo que representa la primera letra de cada uno de los siguientes componentes:
 
 Linux: El sistema operativo subyacente. Linux es un sistema operativo gratuito y de código abierto que es ampliamente utilizado para servidores y sistemas integrados.
 EngineX (se pronuncia "engine-x" y se abrevia como "NGINX"): Es el servidor web utilizado en la pila. NGINX es conocido por su alto rendimiento, estabilidad, rica configuración de características, simple arquitectura y bajo uso de recursos.
@@ -41,20 +41,20 @@ Nos encontraremos con lo siguiente:
         Maquina NFS con IP: 192.168.3.12 - 172.16.1.12
         Maquina MARIADB con IP: 172.16.1.5
 
-Nuestro servidor Balancedor si podrá tener acceso a internet y si podrá conectarse a nuestras maquinas backend, pero NO a nuestro servidor mariadb.
-Nuestros host backend, si podrán tener conexión con el servidor mariadb, servidor nfs y balanceador, pero NO pueden tener internet.
+Nuestro servidor Balanceador si podrá tener acceso a internet y si podrá conectarse a nuestras maquinas backend, pero NO a nuestro servidor MariaDB.
+Nuestros host backend, si podrán tener conexión con el servidor MariaDB, servidor nfs y balanceador, pero NO pueden tener internet.
 Nuestro servidor NFS estará configurado de igual forma que nuestros backend.
 Nuestro servidor MariaDB si podrán conectarse a los servidores backend, pero NO tendrá acceso a internet ni tampoco al servidor balanceador.
 
 ## CONFIGURACIÓN BALANCEADOR
 
-En este apartado empezaremos configurando nuestro balanceador. Parto de la base que despues de ejecutar nuestro maravilloso script de aprovisionamiento tenemos instalado el servidor NGINX el cual nos permitirá que está máquina se convierta en un balanceador. 
+En este apartado empezaremos configurando nuestro balanceador. Parto de la base que después de ejecutar nuestro maravilloso script de aprovisionamiento tenemos instalado el servidor NGINX el cual nos permitirá que está máquina se convierta en un balanceador. 
 
 Para ello haremos lo siguiente, nos iremos a nuestro directorio **/etc/nginx/sites-available/default** , una vez ahí haremos un cp del fichero original llamado "default" y le cambiaremos el nombre por uno mas identificativo, en este caso "Balanceador".
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/feeab358-0fae-4977-a85e-c53dda0f324b)
 
-Bien, una vez hecho esto tendremos que entender que nuestro servidor **nginx** solo recogerá los ficheros en sitios habilitados a traves de un enlace, a diferencia de nuestro conocido **"apache2"** que se hacía con **a2enable**.
+Bien, una vez hecho esto tendremos que entender que nuestro servidor **nginx** solo recogerá los ficheros en sitios habilitados a través de un enlace, a diferencia de nuestro conocido **"apache2"** que se hacía con **a2enable**.
 
 Lo primero que crearemos será un enlace del fichero **"Balanceador"** y que este apunte a la ruta **/etc/nginx/sitex-available /etc/nginx/sites-enabled**
 Para ello ejecutaremos el siguiente comando. 
@@ -68,7 +68,7 @@ Bien, una vez hecho este paso, haremos lo siguiente, nos iremos a la ruta de **/
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/798a9df6-53ec-4508-8780-5538b0b75f9c)
 
-Como vemos, despues de haber borrado el anterior, nos quedariamos con este ya activo, de hecho cambia de color, y si hacemos un **ls -l** apreciamos la ruta de donde hace referencia.
+Como vemos, después de haber borrado el anterior, nos quedaríamos con este ya activo, de hecho cambia de color, y si hacemos un **ls -l** apreciamos la ruta de donde hace referencia.
 
 ¿Hasta aqui bien no?
 
@@ -104,7 +104,7 @@ Antes que nada, ejecutaremos el comando:
 
 ## CONFIGURACIÓN BACKEND NGINX
 
-Como hemos comentado en el apartado anterior, teniendo en cuenta que nuestros script de aprovisionamiento se instalarón correctamente. 
+Como hemos comentado en el apartado anterior, teniendo en cuenta que nuestro script de aprovisionamiento se instalaron correctamente. 
 Esta máquina contendrá los siguientes servicios instalados.
 
     servidor nginx
@@ -120,12 +120,12 @@ Esta máquina contendrá los siguientes servicios instalados.
     sudo mount
 
 Para configurar nuestro servidor de backend Nginx, haremos lo siguiente, nos iremos a la siguiente ruta: **/etc/nginx/sites-available**.
-Una vez aquí haremos lo siguiente, editaremos el fichero **"default"** y tan solo moficiaremos estas líneas.
+Una vez aquí haremos lo siguiente, editaremos el fichero **"default"** y tan solo modificaremos estas líneas.
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/d86d9d7c-79ab-4953-bcca-8fad7a43458c)
 
 Vemos como he puesto la ruta **"root /var/nfs/wordpress"** Esto esto es así porque ahí será donde nuestro servidor nginx backend hará la petición al sitio web, que a su vez se hará una carpeta montada en nuestro servidor **"NFS"** .
-Tambien crearemos nuesta carpeta para que el montaje sea exitoso.
+También crearemos nuestra carpeta para que el montaje sea exitoso.
 
     sudo mkdir -p /var/nfs/wordpress
 
@@ -134,17 +134,17 @@ Hago bastante hincapié en que tengáis cuidado con esta linea, tendreis que añ
     # Add index.php to the list if you are using PHP
         index index.html index.php index.htm index.nginx-debian.html;
 
-También tendremos que tener en cuenta que esa ip que ponemos ahi hace referencia al servidor NFS desde el cual se hara la petición.
+También tendremos que tener en cuenta que esa ip que ponemos ahi hace referencia al servidor NFS desde el cual se hará la petición.
 
-Bien, una vez hecho todo esto, el siguiente paso será hacer exactamente lo mismo pero en nuestro otro servidor backend.
-Una vez hecho este paso, reiniciamos el sercicio.
+Bien, una vez hecho todo esto, el siguiente paso será hacer exactamente lo mismo, pero en nuestro otro servidor backend.
+Una vez hecho este paso, reiniciamos el servicio.
 
     sudo systemctl restart nginx
     sudo systemctl restart php7.3-fpm
 
 ## CONFIGURACIÓN SERVIDOR NFS
 
-En este apartado teniendo en cuenta que nuestros script de aprovisionamiento han hecho bien su trabajo, haremos lo siguiente.
+En este apartado teniendo en cuenta que nuestros scripts de aprovisionamiento han hecho bien su trabajo, haremos lo siguiente.
 
 Nos iremos a nuestra ruta **/var/nfs/**, Descargaremos ahi nuestro CMS, en este caso con sudo wget.
 
@@ -189,7 +189,7 @@ Hecho este paso, tendremos que irnos al siguiente directorio y editar su fichero
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/9965b65c-1595-494d-8b87-bb5b2046c52e)
 
 Deberemos de poner la IP de nuestro servidor NFS.
-Una vez terminado ejecutaremos el siguiente comando para actualizar los volumenes montados en caso de que surgiese algun problema.
+Una vez terminado ejecutaremos el siguiente comando para actualizar los volúmenes montados en caso de que surgiese algún problema.
     
     sudo exportfs -ra
     sudo systemctl restart php7.3-fpm
@@ -202,7 +202,8 @@ Bien, teniendo en cuenta que nuestro servidor NFS ahora mismo ya tiene montado e
 
     sudo mount 192.168.3.12:/var/nfs/wordpress /var/nfs/wordpress
 
-    Lo que estamos haciendo aquí es que estamos montado el directorio de nuestro servidor backend que habiamos en el paso anterior en la carpeta que nuestro script de aprovisionamiento 
+    Lo que estamos haciendo aquí es que estamos montado el directorio de nuestro servidor backend que habíamos hecho 
+    en el paso anterior, en la carpeta que nuestro script de aprovisionamiento 
     creo cuando se incio la maquina, que esta en /var/nfs/wordpress .
 
 Ahora si hacemos un ls -l de nuestro directorio /var/nfs/wordpress, nos encontraremos con la carpeta del servidor NFS montada. 
@@ -230,7 +231,7 @@ Ahora empezaremos a crear la BBDD para nuestro wordpress, para ello nos logueamo
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/a10b6ffb-e7e7-4018-b548-9a9bac86bbe5)
 
-    Despues de todo esto, reiniciaremos el servicio de mariadb.
+    Después de todo esto, reiniciaremos el servicio de mariadb.
     sudo systemctl restart mariadb
 
 Bien, hasta aquí, ¿todo correcto no? lo recomendable seria ir a nuestro cliente backend nginx y hacer una prueba de conexión remota para certificar que si conecta correctamente con la BBDD.
@@ -247,7 +248,7 @@ Bien, como hemos comentado en el apartado anterior, antes de probar nada lo corr
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/8d9e16c5-2cd0-4f0c-802d-b83c02d505c3)
 
 
-## COMPROBACIÓN DE VOLUMENES INSTALADOS EN BACKEND
+## COMPROBACIÓN DE VOLÚMENES INSTALADOS EN BACKEND
 
         comando df -h
 
@@ -262,7 +263,7 @@ En este apartado tendremos que tener en cuenta que si todo lo anterior lo hemos 
 
 Para ello lo primero que tendremos que hacer será irnos a nuestro navegador web (recomiendo ejecutar con "pestaña privada" para ahorrarnos problemas).
 
-Introducideremos la siguiente direccion: **http://localhost:9000/wp-admin/install.php**
+Introduciremos la siguiente dirección: **http://localhost:9000/wp-admin/install.php**
 
 Si todo ha salido correctamente, debería de salirnos esta ventana, en caso de que no os saliera nada os recomendaría que observarais muy bien el error y os vayais a vuestros ficheros error.log , ya que muchas veces suelen ser problemas de sintaxis o que no hemos reiniciado los servicios correctamente...
 
@@ -270,7 +271,7 @@ Si todo ha salido correctamente, debería de salirnos esta ventana, en caso de q
 
 El resultado ha sido un éxito!! 
 
-Ahora no es más que instalar nuestro wordpress. Para ello lo personalizaremos a nuestra manera y le daremos al boton de la esquina inferior que pone **"install wordpress"**
+Ahora no es más que instalar nuestro wordpress. Para ello lo personalizaremos a nuestra manera y le daremos al botón de la esquina inferior que pone **"install wordpress"**
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/b9d58d06-a285-4f13-8bd0-d0c8f7f783a4)
 
