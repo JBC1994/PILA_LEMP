@@ -150,7 +150,10 @@ Nos debería de quedar algo así.
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/6826fad8-3597-48c5-bef8-3584c24ad38a)
 
 Ahora nos meteremos dentro de la carpeta de wordpress y buscaremos el fichero **wp-config-example.php.**
-Lo recomendable seria darle un nombre mas orientativo, en este caso me decanté por, mv wp-config-example.php wp-config-php.
+Lo recomendable seria darle un nombre mas orientativo, en este caso me decanté por:
+
+    mv wp-config-example.php wp-config-php.
+
 Editamos el fichero y añadimos lo siguiente, en mi caso:
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/d8af1996-b812-45f3-af66-2244cdaa884b)
