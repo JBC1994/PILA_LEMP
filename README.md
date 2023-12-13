@@ -242,8 +242,6 @@ Bien, como hemos comentado en el apartado anterior, antes de probar nada lo corr
 
     sudo mysql -u joaquin -p -h 172.16.1.5;
 
-![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/6367f15c-eb0f-463c-a2b2-460afa4a4a10)
-
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/cd14aca2-a788-41bd-a38a-2aa8ddb4b2ad)
 
 ![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/8d9e16c5-2cd0-4f0c-802d-b83c02d505c3)
