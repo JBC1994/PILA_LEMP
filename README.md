@@ -8,9 +8,10 @@
 -    1.4. [CONFIGURACIÓN SERVIDOR NFS](#CONFIGURACIÓN-SERVIDOR-NFS)
 -    1.5. [CONFIGURACIÓN SERVIDOR MARIADB](#CONFIGURACIÓN-SERVIDOR-MARIADB)
 
-2.0. [¿ Qué es una IP elástica en AWS ?](#Qué-es-una-IP-elástica-en-AWS) 
--    2.1. [Asociar una IP elástica a una instancia AWS](#Asociar-una-IP-elástica-a-una-instancia-AWS)
--    2.2. [Conexión a instancias EC2 AWS](#Conexión-a-instancias-EC2-AWS)
+2.0. [¿QUE ES UN UFW EN LINUX?](#QUE-ES-UN-UFW-EN-LINUX) 
+-    2.1. [CONFIGURAR UFW EN TODAS LAS MAQUINAS](#CONFIGURAR-UFW-EN-TODAS-LAS-MAQUINAS)
+-    2.2. [CONFIGURAR SERVICIO PHP FPM](#CONFIGURAR-SERVICIO-PHP-FPM)
+-    2.3. [PUESTA-EN MARCHA-PILA-LEMP](#PUESTA-EN-MARCHA-PILA-LEMP)
 
 3.0. [Instalación de servicios en instancias AWS](#Instalación-de-servicios-en-instancias-AWS)
 -    3.1. [Configuración de conectividad en instancias AWS](#Configuración-de-conectividad-en-instancias-AWS)
@@ -65,6 +66,32 @@ Como vemos, despues de haber borrado el anterior, nos quedariamos con este ya ac
 
 ¿Hasta aqui bien no?
 
+Ahora deberemos de configurar nuestro servidor, para ello, editaremos nuestro fichero "Balanceador" y borraremos todo su interior. 
+Una vez borrado su interior, copiaremos lo siguiente:
+
+    upstream backend_servidores {
+        server 192.168.3.10; # nginx1
+        server 192.168.3.11; # nginx2
+    }
+    
+    server {
+        listen 80;
+        server_name nginxm_balanceador_backend;
+
+    location / {
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_pass http://backend_servidores;
+      }
+    }
+
+De tal manera, que su resultado será el siguiente: 
+
+![image](https://github.com/JBC1994/PILA_LEMP/assets/120668110/77e96065-7c21-42fb-a10b-be82cd9a9848)
+
+Bueno, pues hasta aquí podemos decir que hemos terminado la configuración de nuestro Balanceador, quedan mas cosas, pero prefiero contároslo al final.
 
 ## CONFIGURACIÓN BACKEND NGINX
 
@@ -72,7 +99,13 @@ Como vemos, despues de haber borrado el anterior, nos quedariamos con este ya ac
 
 ## CONFIGURACIÓN SERVIDOR MARIADB
 
+## QUE ES UN UFW EN LINUX
 
+## CONFIGURAR UFW EN TODAS LAS MAQUINAS
+
+## CONFIGURAR SERVICIO PHP FPM
+
+## PUESTA-EN MARCHA-PILA-LEMP
 
 
 En nuestro balanceador borraremos las zonas sites-enabled y configuraremos un nuevo fichero con un enlace simbolico ubicado en sites-available que ira a al directorio /etc/nginx/sites-enabled 
