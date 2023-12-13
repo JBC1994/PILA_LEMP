@@ -2,11 +2,11 @@
 ### <p align="right">Joaquín Blanco Contreras, Curso: ASIR2</p>
 
 1.0. [INTRODUCCIÓN PILA LEMP](#INTRODUCCIÓN-PILA-LEMP)
--    1.1. [Escenario De La práctica](#Escenario-de-la-práctica)
--    1.2. [¿Qué es una VPC en AWS?](#Qué-es-una-VPC-en-AWS)
--    1.3. [Creación de VPC en AWS](#Creación-de-VPC-en-AWS)
--    1.4. [¿Qué es una EC2 en AWS?](#Qué-es-una-EC2-en-AWS)
--    1.5. [Creación de EC2 en AWS](#Creación-de-EC2-en-AWS)
+-    1.1. [ESCENARIO DE LA PRÁCTICA](#Escenario-de-la-práctica)
+-    1.2. [CONFIGURACIÓN BALANCEADOR](#CONFIGURACIÓN-BALANCEADOR)
+-    1.3. [CONFIGURACIÓN BACKEND NGINX](#CONFIGURACIÓN-BACKEND-NGINX)
+-    1.4. [CONFIGURACIÓN SERVIDOR NFS](#CONFIGURACIÓN-SERVIDOR-NFS)
+-    1.5. [CONFIGURACIÓN SERVIDOR MARIADB](#CONFIGURACIÓN-SERVIDOR-MARIADB)
 
 2.0. [¿ Qué es una IP elástica en AWS ?](#Qué-es-una-IP-elástica-en-AWS) 
 -    2.1. [Asociar una IP elástica a una instancia AWS](#Asociar-una-IP-elástica-a-una-instancia-AWS)
@@ -22,6 +22,31 @@
 4.0. [Puesta en marcha de nuestro Balanceador AWS](#Puesta-en-marcha-de-nuestro-Balanceador-AWS) 
 -    4.1. [Configuración instancia server MariaDB AWS](#Configuración-instancia-server-MariaDB-AWS)
 -    4.2. [Prueba definitiva Balanceador en AWS](#Prueba-definitiva-Balanceador-en-AWS)
+
+
+# INTRODUCCIÓN PILA LEMP
+
+Una pila "LEMP" es un conjunto de software de código abierto que se instala comúnmente juntos para habilitar un servidor para alojar sitios web y aplicaciones web. La palabra "LEMP" es un acrónimo que representa el primer letra de cada uno de los siguientes componentes:
+
+Linux: El sistema operativo subyacente. Linux es un sistema operativo gratuito y de código abierto que es ampliamente utilizado para servidores y sistemas integrados.
+EngineX (se pronuncia "engine-x" y se abrevia como "NGINX"): Es el servidor web utilizado en la pila. NGINX es conocido por su alto rendimiento, estabilidad, rica configuración de características, simple arquitectura y bajo uso de recursos.
+MySQL/MariaDB: El sistema de gestión de base de datos. MySQL es el sistema de base de datos relacional más popular, pero muchos usuarios de LEMP optan por MariaDB, un fork de MySQL que es completamente compatible con MySQL pero es de código abierto.
+PHP: El lenguaje de programación del lado del servidor. PHP es un lenguaje de programación popular para el desarrollo web que puede incrustarse directamente en el HTML.
+Este conjunto de software proporciona una base sólida para servir aplicaciones web dinámicas. NGINX actúa como el servidor web que maneja las solicitudes HTTP y puede servir archivos estáticos y pasar solicitudes dinámicas a PHP, que a su vez puede utilizar MySQL o MariaDB para gestionar datos. Linux, siendo el sistema operativo, maneja todas las interacciones con el hardware y proporciona la plataforma sobre la cual corren todos los demás componentes.
+
+La pila LEMP es una alternativa a la pila LAMP, donde Apache es el servidor web en lugar de NGINX.
+
+# ESCENARIO DE LA PRÁCTICA
+
+
+# CONFIGURACIÓN BALANCEADOR
+
+# CONFIGURACIÓN BACKEND NGINX
+
+# CONFIGURACIÓN SERVIDOR NFS
+
+# CONFIGURACIÓN SERVIDOR MARIADB
+
 
 
 
